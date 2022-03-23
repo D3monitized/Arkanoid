@@ -37,7 +37,9 @@ void Block::GetBallReference(Ball *_ball, int *_ballCount)
 	ballCount = _ballCount; 
 }
 
-void Block::TakeDamage()
+void Block::TakeDamage() // feedback: seems like this function does a little bit more than it looks like from its name(I'm thinking about playing sound here).
+						// This is also the only reason why Block class needs to have pointer to the Engine instance. If playing of the sound was implemented elsewhere
+						// you could remove Engine reference from this class compeletely as well as make sure this function does only what its named for :)
 {
 	health--; 
 	//std::cout << health << std::endl; 

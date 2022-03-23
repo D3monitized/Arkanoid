@@ -27,7 +27,8 @@ int main() {
 		SDL_Delay(16);
 	}
 
-	game->Clean();
+	game->Clean(); // feedback: despite you call the clean funcion the actual instance of Game class is never deleted. Proper way to do it is:
+	// delete game;
 
 	return 0;
 }

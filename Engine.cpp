@@ -11,7 +11,8 @@ float deltaTime = 0;
 
 Scenes currentScene = Scenes::Menu; 
 
-void Engine::PlayAudio(std::string path = "") 
+void Engine::PlayAudio(std::string path = "")  // feedback: its good to pass strings as refs to functions, to avoid copying. Also default values to arguemtns should go
+											// to declarations, see https://stackoverflow.com/questions/14902129/default-parameters-in-h-and-cpp-files
 {
 	std::cout << "Play Audio" << std::endl; 
 
