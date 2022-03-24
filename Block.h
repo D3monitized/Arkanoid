@@ -12,8 +12,7 @@ public:
 	SDL_Texture* texture; 
 	SDL_Texture* textTexture; 
 	Ball* ball; 
-	int* ballCount; 
-	Engine* engine; 
+	int* ballCount; 	
 
 	SDL_Color color; 
 	BoxCollider collider; 
@@ -31,7 +30,7 @@ public:
 	void Draw(); 
 
 	Block();
-	Block(Engine *engine, Vector2 pos, Vector2 size, int _health);
+	Block(Vector2 pos, Vector2 size, int _health);
 	Block(Vector2 pos, Vector2 size);
 	~Block(); 
 };

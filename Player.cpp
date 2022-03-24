@@ -2,8 +2,8 @@
 
 void Player::Update()
 {
-	dir.x = keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT] ? 1 : 0;
-	dir.x = keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT] ? -1 : dir.x; 
+	dir.x = keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT] ? 1.0f : 0.0f;
+	dir.x = keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT] ? -1.0f : dir.x; 
 
 	if (pos.x + size.x >= WIDTH && dir.x > 0 || pos.x <= 0 && dir.x < 0)
 		return; 	
@@ -25,7 +25,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	SDL_Rect rect = { pos.x, pos.y, size.x, size.y };
+	SDL_Rect rect = { (int)pos.x, (int)pos.y, (int)size.x, (int)size.y };
 	SDL_RenderCopy(renderer, texture, NULL, &rect);
 
 	collider.Draw(); 
@@ -54,8 +54,11 @@ Player::Player()
 
 	// feedback: you don't have to call a constructor of the BoxCollider explicitly here, since the instance is already created as a class member. You can just set the values of
 	// the needed memebers of collider like you did with collider.hasCollided
-	collider = BoxCollider(Vector2(pos.x, pos.y + size.y / 4), Vector2(size.x, size.y / 2), false);
-	//collider.draw = true; 
+	collider.collider.x = (int)pos.x;
+	collider.collider.y = (int)(pos.y + size.y / 4);
+	collider.collider.w = (int)size.x; 
+	collider.collider.h = (int)(size.y / 2);
+	collider.isStatic = false; 	
 	collider.hasCollided = true; 
 }
 

@@ -34,7 +34,7 @@ public:
 	Uint8* waveStart; //where the data starts
 	Uint32 waveLength; //how long the wavefile is
 	void SetupDevice(); 
-	void PlayAudio(std::string path);
+	void PlayAudio(std::string& path);
 	void PauseAudio();	
 	~Engine(); 
 };

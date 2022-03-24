@@ -28,7 +28,8 @@ int main() {
 	}
 
 	game->Clean(); // feedback: despite you call the clean funcion the actual instance of Game class is never deleted. Proper way to do it is:
-	// delete game;
+	delete game; 
+	game = nullptr; 
 
 	return 0;
 }

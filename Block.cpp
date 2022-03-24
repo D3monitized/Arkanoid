@@ -46,10 +46,7 @@ void Block::TakeDamage() // feedback: seems like this function does a little bit
 	if (health <= 0) {
 		isAlive = false;
 		//std::cout << "Block Destroyed" << std::endl; 
-	}
-	
-	//Plays audio on block collision
-	engine->PlayAudio("Assets/Ball/OnBallCollision.wav");
+	}	
 }
 
 Block::Block()
@@ -86,7 +83,7 @@ Block::Block(Vector2 _pos, Vector2 _size)
 	size = _size;
 }
 
-Block::Block(Engine *_engine, Vector2 _pos, Vector2 _size, int _health)
+Block::Block(Vector2 _pos, Vector2 _size, int _health)
 {
 	//Texture
 	SDL_Surface* tempSurface = IMG_Load("Assets/Block/Block.png");
@@ -104,9 +101,7 @@ Block::Block(Engine *_engine, Vector2 _pos, Vector2 _size, int _health)
 
 	collider = BoxCollider(Vector2(pos.x, pos.y + size.y / 4), Vector2(size.x, size.y / 2), true); 	
 	health = _health; 
-	//std::cout << health << std::endl; 
-
-	engine = _engine; 
+	//std::cout << health << std::endl; 	
 }
 
 Block::~Block()
@@ -114,6 +109,5 @@ Block::~Block()
 	ball = nullptr; 
 	texture = nullptr; 
 	textTexture = nullptr; 
-	ballCount = nullptr; 
-	engine = nullptr; 
+	ballCount = nullptr; 	
 }

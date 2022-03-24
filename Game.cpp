@@ -1,44 +1,9 @@
 #include <iostream>
 
 #include "Game.h"
-#include "Engine.h"
-#include "Player.h"
-#include "Block.h"
-#include "Ball.h"
-#include "MainMenu.h"
-#include "LevelEditor.h"
-
 
 // feedback: global variables below are not supporting object-oriented approach needed for this assignemnt. I'd vote for moving them to the Game class when possible or other classes
 // where they belong, for example inside main function.
-
-SDL_Event Game::event;
-
-//Game settings: 
-float ballTimer = 10; //when ballTimer hits 0, will spawn another ball
-
-//Other components
-Engine engine;
-MainMenu* menu;
-LevelEditor editor;
-
-//Player
-Player player;
-
-//Blocks
-Block* block[100000];
-Vector2 blockSize = Vector2(50, 50);
-Vector2 blockPos = Vector2();
-int blockRow = 0;
-int blockColumn = 0;
-int blockAmount = 0;
-
-//Ball
-Ball ball[20];
-int ballCount = 1;
-Vector2 ballSize = Vector2(35, 35);
-Vector2 ballPos = Vector2();
-float timer = 0;
 
 void Game::Init(const char* title, int x, int y, int w, int h, bool fullScreen)
 {
@@ -100,7 +65,7 @@ void Game::SetupGame()
 	for (size_t i = 0; i < blockRow + 2; i++)
 	{
 		int current = i + blockRow * count;
-		block[current] = new Block(&engine, blockPos, blockSize, currentHealth); // feedback: memory allocated but never released. Should be deleted in either destructor for Game or Clean function
+		block[current] = new Block(blockPos, blockSize, currentHealth); // feedback: memory allocated but never released. Should be deleted in either destructor for Game or Clean function
 		block[current]->GetBallReference(ball, &ballCount);
 		block[current]->isAlive = true;
 		block[current]->color = currentColor;
@@ -202,7 +167,7 @@ void Game::SetupCustomGame()
 
 		std::cout << pos << " " << size << std::endl;
 
-		block[iteration - 1] = new Block(&engine, pos, size, 1); // feedback: same here, you allocate a new memory without deleting already allocated Block instances and never delete it. This is a double memory leak.
+		block[iteration - 1] = new Block(pos, size, 1); // feedback: same here, you allocate a new memory without deleting already allocated Block instances and never delete it. This is a double memory leak.
 		block[iteration - 1]->GetBallReference(ball, &ballCount);
 		block[iteration - 1]->isAlive = true;
 		blockAmount++; 
@@ -253,9 +218,6 @@ void Game::HandleEvents()
 	}
 }
 
-void UpdateGame();
-void SpawnBall();
-
 Scenes thisScene = currentScene; 
 void Game::Update()
 {
@@ -277,7 +239,7 @@ void Game::Update()
 		editor.Update();	
 }
 
-void UpdateGame()
+void Game::UpdateGame()
 {
 	//Player
 	player.Update();
@@ -301,7 +263,7 @@ void UpdateGame()
 	}
 }
 
-void SpawnBall()
+void Game::SpawnBall()
 {
 	if (timer > 0)
 	{
@@ -315,7 +277,6 @@ void SpawnBall()
 	}
 }
 
-void RenderGame();
 void Game::Render()
 {
 	SDL_RenderClear(renderer);
@@ -337,7 +298,7 @@ void Game::Render()
 	SDL_RenderPresent(renderer);
 }
 
-void RenderGame()
+void Game::RenderGame()
 {
 	//Player
 	player.Draw();
@@ -367,8 +328,11 @@ void Game::Clean()
 
 Game::Game()
 {
+	engine = Engine(); 
 }
 Game::~Game()
 {
+	menu = nullptr; 
+	//delete[] block;
 }
 
