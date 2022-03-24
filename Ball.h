@@ -23,6 +23,7 @@ public:
 	void Update(Vector2 _pos);
 	void Draw();
 
+	// feedback: format: constructors and destructors are usually placed first in the class declaration
 	Ball(); 
 	Ball(Vector2 pos, Vector2 size);
 	~Ball(); 

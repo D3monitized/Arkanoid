@@ -52,6 +52,8 @@ Player::Player()
 	size = Vector2(100, 50);
 	pos = Vector2(WIDTH / 2 - size.x / 2, HEIGHT * .85f - size.y / 2);
 
+	// feedback: you don't have to call a constructor of the BoxCollider explicitly here, since the instance is already created as a class member. You can just set the values of
+	// the needed memebers of collider like you did with collider.hasCollided
 	collider = BoxCollider(Vector2(pos.x, pos.y + size.y / 4), Vector2(size.x, size.y / 2), false);
 	//collider.draw = true; 
 	collider.hasCollided = true; 

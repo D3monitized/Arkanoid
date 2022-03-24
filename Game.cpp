@@ -8,6 +8,10 @@
 #include "MainMenu.h"
 #include "LevelEditor.h"
 
+
+// feedback: global variables below are not supporting object-oriented approach needed for this assignemnt. I'd vote for moving them to the Game class when possible or other classes
+// where they belong, for example inside main function.
+
 SDL_Event Game::event;
 
 //Game settings: 
@@ -73,7 +77,7 @@ void Game::Init(const char* title, int x, int y, int w, int h, bool fullScreen)
 	else if (currentScene == Scenes::CustomGame)
 		SetupCustomGame(); 
 
-	menu = new MainMenu();
+	menu = new MainMenu(); // feedback: memory allocated but never released. Should be deleted in either destructor for Game or Clean function
 	editor = LevelEditor();
 }
 
@@ -96,7 +100,7 @@ void Game::SetupGame()
 	for (size_t i = 0; i < blockRow + 2; i++)
 	{
 		int current = i + blockRow * count;
-		block[current] = new Block(&engine, blockPos, blockSize, currentHealth);
+		block[current] = new Block(&engine, blockPos, blockSize, currentHealth); // feedback: memory allocated but never released. Should be deleted in either destructor for Game or Clean function
 		block[current]->GetBallReference(ball, &ballCount);
 		block[current]->isAlive = true;
 		block[current]->color = currentColor;
@@ -198,7 +202,7 @@ void Game::SetupCustomGame()
 
 		std::cout << pos << " " << size << std::endl;
 
-		block[iteration - 1] = new Block(&engine, pos, size, 1);
+		block[iteration - 1] = new Block(&engine, pos, size, 1); // feedback: same here, you allocate a new memory without deleting already allocated Block instances and never delete it. This is a double memory leak.
 		block[iteration - 1]->GetBallReference(ball, &ballCount);
 		block[iteration - 1]->isAlive = true;
 		blockAmount++; 
